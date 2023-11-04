@@ -1,0 +1,35 @@
+{
+  "SettingsVersion": 1.2,
+  "SimMode": "ComputerVision",
+  "SubWindows": [
+    {"WindowID": 0, "CameraName": "front_left", "ImageType": 6},
+    {"WindowID": 1, "CameraName": "front_center", "ImageType": 0},
+    {"WindowID": 2, "CameraName": "front_right", "ImageType": 6}
+  ],
+  "Vehicles": {
+    "CVAgent": {
+      "VehicleType": "ComputerVision",
+      "AutoCreate": true,
+      "Cameras": {
+        "front_left": {
+          "X": 0.0,"Y": -1.0, "Z": 0.0,
+          "CaptureSettings": [
+            {"ImageType": 0, "Width": 1024, "Height": 768, "FOV_Degrees": 90},
+            {"ImageType": 2, "Width": 1024, "Height": 768, "FOV_Degrees": 90},
+            {"ImageType": 5, "Width": 1024, "Height": 768, "FOV_Degrees": 90},
+            {"ImageType": 6, "Width": 1024, "Height": 768, "FOV_Degrees": 90}
+          ]
+        },
+        "front_right": {
+          "X": 0.0, "Y": 1.0, "Z": 0.00,
+          "CaptureSettings": [
+            {"ImageType": 0, "Width": 1024, "Height": 768, "FOV_Degrees": 90},
+            {"ImageType": 2, "Width": 1024, "Height": 768, "FOV_Degrees": 90},
+            {"ImageType": 5, "Width": 1024, "Height": 768, "FOV_Degrees": 90},
+            {"ImageType": 6, "Width": 1024, "Height": 768, "FOV_Degrees": 90}
+          ]
+        }
+      }
+    }
+  }
+}
