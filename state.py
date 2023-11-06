@@ -6,7 +6,7 @@ client.confirmConnection()
 
 # Get the pose of the CV agent
 pose = client.simGetVehiclePose()
-
+print(pose)
 # Extract orientation and position data
 orientation = pose.orientation
 position = pose.position

@@ -21,7 +21,7 @@ def delete_npy_files(folder='img'):
                 os.remove(file_path)
 
 def set_pose(client, pose):
-    orientation = airsim.Quaternionr(pose[0], pose[1], pose[2], pose[3])
+    orientation = airsim.Quaternionr(pose[0], pose[3], pose[1], pose[2])
     position = airsim.Vector3r(pose[4], pose[5], pose[6])
     pose = airsim.Pose(position, orientation)
     client.simSetVehiclePose(pose, True)
@@ -99,5 +99,3 @@ def image_save(client, base_folder = 'img'):
         plt.axis('off')
         plt.savefig(png_filename, bbox_inches='tight', pad_inches=0)
         plt.close()
-
-
