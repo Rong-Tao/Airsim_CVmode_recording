@@ -34,11 +34,11 @@ def image_save(client, base_folder = 'img'):
         airsim.ImageRequest("front_left", airsim.ImageType.Scene, False, False),
         airsim.ImageRequest("front_left", airsim.ImageType.DepthPerspective, True),
         airsim.ImageRequest("front_left", airsim.ImageType.Segmentation, False, False),
-        airsim.ImageRequest("front_left", airsim.ImageType.SurfaceNormals, True),
+        airsim.ImageRequest("front_left", airsim.ImageType.SurfaceNormals, False, False),
         airsim.ImageRequest("front_right", airsim.ImageType.Scene, False, False),
         airsim.ImageRequest("front_right", airsim.ImageType.DepthPerspective, True),
         airsim.ImageRequest("front_right", airsim.ImageType.Segmentation, False, False),
-        airsim.ImageRequest("front_right", airsim.ImageType.SurfaceNormals, True)
+        airsim.ImageRequest("front_right", airsim.ImageType.SurfaceNormals, True, False)
         ])
 
     # Specify the base folder to save images
@@ -51,10 +51,11 @@ def image_save(client, base_folder = 'img'):
         path = os.path.join(base_folder, folder)
         if not os.path.exists(path):
             os.makedirs(path)
-
+            
+    timestamp = str(responses[0].time_stamp)
     # Process and save each response
     for i, response in enumerate(responses):
-        timestamp = str(response.time_stamp)
+        
         camera = 'left' if i < 4 else 'right'
 
         if response.image_type == airsim.ImageType.Scene:
@@ -80,19 +81,23 @@ def image_save(client, base_folder = 'img'):
             print("Type %d, size %d" % (response.image_type, len(response.image_data_uint8)))
             img = np.frombuffer(response.image_data_uint8, dtype=np.uint8).reshape(response.height, response.width, -1)
 
+        
         img = np.flipud(img)
         img = np.fliplr(img)
 
         # Save the image using Matplotlib without showing it
-        plt.figure(figsize=(7.68, 5.12))  # Aspect ratio 4:3 for 1024x768
+        default_dpi = plt.rcParams['figure.dpi']
+        plt.figure(figsize=(img.shape[1] / default_dpi, img.shape[0] / default_dpi),
+                   dpi=default_dpi)
         if img.shape[2] == 1:
-            plt.imshow(img, cmap='gray')
+            plt.imshow(img, cmap='gray', aspect='auto')
         else:
             img = img[:, :, ::-1]
-            plt.imshow(img)
-        
+            plt.imshow(img, aspect='auto')
+
         np.save(npy_filename, img)
         plt.axis('off')
         plt.savefig(png_filename, bbox_inches='tight', pad_inches=0)
         plt.close()
+
 
