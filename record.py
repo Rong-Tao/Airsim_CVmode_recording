@@ -24,4 +24,5 @@ poses = read_pose_data()
 
 for pose in poses:
     set_pose(client, pose)
-    image_save(client)
+    #image_save(client)
+    image_save_test(client)
