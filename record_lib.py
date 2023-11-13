@@ -4,6 +4,16 @@ import os
 import matplotlib.pyplot as plt
 from PIL import Image
 
+def seg_reid(client):
+    object_names = client.simListSceneObjects()
+    id = 0
+    for ob in object_names:
+        if ob.lower().startswith('light'):
+            continue
+        print(id, ob)
+        client.simSetSegmentationObjectID(ob,  id % 255)
+        id += 1
+
 def read_pose_data(file_path='pose_data.txt'):
     poses = []
     with open(file_path, 'r') as file:
@@ -21,7 +31,7 @@ def delete_npy_files(folder='img'):
                 os.remove(file_path)
 
 def set_pose(client, pose):
-    orientation = airsim.Quaternionr(pose[0], pose[3], pose[1], pose[2])
+    orientation = airsim.Quaternionr(pose[0], pose[1], pose[2], pose[3])
     position = airsim.Vector3r(pose[4], pose[5], pose[6])
     pose = airsim.Pose(position, orientation)
     client.simSetVehiclePose(pose, True)
@@ -99,7 +109,6 @@ def image_save(client, base_folder = 'img'):
         plt.axis('off')
         plt.savefig(png_filename, bbox_inches='tight', pad_inches=0)
         plt.close()
-
 
 def image_save_test(client, base_folder = 'img'):
     # Pause the simulation

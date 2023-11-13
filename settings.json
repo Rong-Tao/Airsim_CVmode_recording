@@ -2,9 +2,9 @@
   "SettingsVersion": 1.2,
   "SimMode": "ComputerVision",
   "SubWindows": [
-    {"WindowID": 0, "CameraName": "front_left", "ImageType": 0},
+    {"WindowID": 0, "CameraName": "front_left", "ImageType": 5},
     {"WindowID": 1, "CameraName": "front_center", "ImageType": 0},
-    {"WindowID": 2, "CameraName": "front_right", "ImageType": 0}
+    {"WindowID": 2, "CameraName": "front_right", "ImageType": 5}
   ],
   "Vehicles": {
     "CVAgent": {

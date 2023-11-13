@@ -5,4 +5,5 @@
 !*.py
 !settings.json
 !.gitignore
+!*.ipynb
 
