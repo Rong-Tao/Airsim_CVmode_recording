@@ -47,7 +47,7 @@ def image_save(client, base_folder = 'img'):
         airsim.ImageRequest("front_left", airsim.ImageType.SurfaceNormals, False, False),
         airsim.ImageRequest("front_right", airsim.ImageType.Scene, False, False),
         airsim.ImageRequest("front_right", airsim.ImageType.DepthPerspective, True),
-        airsim.ImageRequest("front_right", airsim.ImageType.Segmentation, False, False),
+        airsim.ImageRequest("front_right", airsim.ImageType.Segmentation, True, False),
         airsim.ImageRequest("front_right", airsim.ImageType.SurfaceNormals, True, False)
         ])
 
@@ -140,15 +140,15 @@ def image_save_test(client, base_folder = 'img'):
 
         filename = os.path.join(base_folder, folder, f"{timestamp}")
         png_filename = f"{filename}.png"
-
+        npy_filename = f"{filename}.npy"
         # Case 1: Pixels as floating-point values
         if response.pixels_as_float:
-            print("Type %d, size %d" % (response.image_type, len(response.image_data_float)))
+            #print("Type %d, size %d" % (response.image_type, len(response.image_data_float)))
             img = np.array(response.image_data_float).reshape(response.height, response.width, -1)
 
         # Case 2: Pixels as uint8 values
         else:
-            print("Type %d, size %d" % (response.image_type, len(response.image_data_uint8)))
+            #print("Type %d, size %d" % (response.image_type, len(response.image_data_uint8)))
             img = np.frombuffer(response.image_data_uint8, dtype=np.uint8).reshape(response.height, response.width, -1)
 
         
@@ -164,7 +164,7 @@ def image_save_test(client, base_folder = 'img'):
         else:
             img = img[:, :, ::-1]
             plt.imshow(img, aspect='auto')
-
+        np.save(npy_filename, img)
         plt.axis('off')
         plt.savefig(png_filename, bbox_inches='tight', pad_inches=0)
         plt.close()
